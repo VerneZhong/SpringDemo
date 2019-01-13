@@ -22,8 +22,8 @@ public class SpringJDBCTest {
         UserService userService = (UserService) context.getBean("userService");
 
         User user = new User();
-        user.setName("张三2");
-        user.setAge(24);
+        user.setName("张三3");
+        user.setAge(25);
         user.setSex("男");
 
         userService.save(user);
