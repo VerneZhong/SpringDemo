@@ -14,4 +14,6 @@ public interface UserService {
     void save(User user);
 
     List<User> getUsers();
+
+    List<User> queryUserByCondition(User user);
 }

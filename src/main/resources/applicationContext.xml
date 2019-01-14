@@ -34,6 +34,7 @@
 
 	<bean id="userService" class="com.zxb.spring.jdbc.service.UserServiceImpl">
 		<property name="jdbcTemplate" ref="dataSource"></property>
+		<property name="parameterJdbcTemplate" ref="dataSource"></property>
 	</bean>
 
 </beans>

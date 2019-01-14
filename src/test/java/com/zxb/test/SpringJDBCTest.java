@@ -6,8 +6,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.*;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Mr.zxb
@@ -22,14 +23,38 @@ public class SpringJDBCTest {
         UserService userService = (UserService) context.getBean("userService");
 
         User user = new User();
-        user.setName("张三3");
+        user.setName("zxb");
         user.setAge(25);
         user.setSex("男");
 
-        userService.save(user);
+//        userService.save(user);
 
-        List<User> users = userService.getUsers();
+//        List<User> users = userService.getUsers();
+        List<User> users = userService.queryUserByCondition(user);
         System.out.println(users);
+
+    }
+
+    @Test
+    public void test2() {
+
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+        executorService.execute(() -> {
+            int j;
+            for (int i = 2; i <= 100; i++) {
+                int k = (int) Math.sqrt(i);
+                for (j = 2; j <= k; j++) {
+                    if (i % j == 0) {
+                        break;
+                    }
+                }
+                if (j > k) {
+                    System.out.print(i + " ");
+                }
+            }
+        });
+
     }
 
 }
