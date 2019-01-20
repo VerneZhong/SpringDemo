@@ -2,21 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:aop="http://www.springframework.org/schema/aop"
-	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.1.xsd
-	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-	 http://www.springframework.org/schema/aop 
-     http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<context:annotation-config />
-	<context:component-scan base-package="com.zxb" />
+	<!--<context:annotation-config />-->
+	<!--<context:component-scan base-package="com.zxb" />-->
 
-	<!-- 2 配置数据源 -->
+	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
 		<property name="url" value="jdbc:mysql://localhost:3306/spring?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
 		<property name="username" value="root" />
@@ -28,13 +24,54 @@
 		<property name="minIdle" value="2" />
 	</bean>
 
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+	<!--<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+		<!--<property name="dataSource" ref="dataSource" />-->
+	<!--</bean>-->
 
+	<!--spring-jdbc方式-->
 	<bean id="userService" class="com.zxb.spring.jdbc.service.UserServiceImpl">
 		<property name="jdbcTemplate" ref="dataSource"></property>
 		<property name="parameterJdbcTemplate" ref="dataSource"></property>
 	</bean>
 
+	<!-- ================ -->
+	<!--spring-data-jpa方式-->
+	<!--配置EntityManagerFactory-->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<!--设置jpa供应适配器-->
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<!--设置jpa扫描的包-->
+		<property name="packagesToScan" value="com.zxb.spring.data.jpa"/>
+		<!--设置jpa属性-->
+		<property name="jpaProperties">
+			<props>
+				<!--hibernate ejb名字的策略-->
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<!--数据库方言-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<!--显示SQL-->
+				<prop key="hibernate.show_sql">true</prop>
+				<!--格式化SQL-->
+				<prop key="hibernate.format_sql">true</prop>
+				<!--表未创建，可根据实体创建-->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--配置事务管理器-->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!--配置支持注解的事务-->
+	<tx:annotation-driven />
+
+	<!--配置spring data-->
+	<jpa:repositories base-package="com.zxb.spring.data" entity-manager-factory-ref="entityManagerFactory" />
+
+	<context:component-scan base-package="com.zxb.spring.data"/>
 </beans>
