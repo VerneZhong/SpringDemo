@@ -19,7 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.criteria.Path;
+import javax.persistence.criteria.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -149,7 +149,7 @@ public class SpringDataJpaTest {
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "createDate");
         Sort sort = new Sort(order);
         // page:index是从0开始
-        Pageable pageable = new PageRequest(1, 5, sort);
+        Pageable pageable = new PageRequest(0, 5, sort);
         Page<Student> page = sortingRepository.findAll(pageable);
 
         print(page);
@@ -185,12 +185,16 @@ public class SpringDataJpaTest {
          * query: 添加查询条件
          * cb:    构建Predicate
          */
-        Specification<Student> specification = (root, query, cb) -> {
-            // root (student age)
-            Path path = root.get("age");
-            return cb.lt(path, 25);
+//        Specification<Student> specification = (root, query, cb) -> {
+//            // root (student age)
+//            Path path = root.get("age");
+//            return cb.lt(path, 25);
+//        };
+        Specification<Student> specification = new Specification<Student>() {
+            public Predicate toPredicate(Root<Student> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.lt(root.<Number>get("age"), 25);
+            }
         };
-
 
         Page<Student> page = studentJpaSpecificationExecutor.findAll(specification, pageable);
         print(page);

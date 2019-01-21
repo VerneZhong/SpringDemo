@@ -9,12 +9,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<!--<context:annotation-config />-->
-	<!--<context:component-scan base-package="com.zxb" />-->
-
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
-		<property name="url" value="jdbc:mysql://localhost:3306/spring?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
+		<property name="url" value="jdbc:mysql:///spring?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
 		<property name="username" value="root" />
 		<property name="password" value="zxbqq" />
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -34,7 +31,7 @@
 		<property name="parameterJdbcTemplate" ref="dataSource"></property>
 	</bean>
 
-	<!-- ================ -->
+	<!--================-->
 	<!--spring-data-jpa方式-->
 	<!--配置EntityManagerFactory-->
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -62,7 +59,7 @@
 		</property>
 	</bean>
 
-	<!--配置事务管理器-->
+	<!--配置jpa事务管理器-->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>

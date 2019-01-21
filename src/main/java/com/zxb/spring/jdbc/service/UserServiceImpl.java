@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,5 +48,23 @@ public class UserServiceImpl implements UserService {
         map.put("name", user.getName());
         List<User> list = parameterJdbcTemplate.query("select * from user where name = :name", map, new UserRowMapper());
         return list;
+    }
+
+    public List<User> queryUserByAge(int age) {
+        List<User> users = jdbcTemplate.query("select * from user where age = ?",
+                new Object[]{ age },
+                new int[]{ Types.INTEGER },
+                new UserRowMapper());
+        return users;
+    }
+
+    public int add(User user) {
+        Map<String, Object> param = new HashMap<String, Object>(16);
+        param.put("name", user.getName());
+        param.put("age", user.getAge());
+        param.put("sex", user.getSex());
+
+        int rows = parameterJdbcTemplate.update("insert into user(name, age, sex) values (:name, :age, :sex)", param);
+        return rows;
     }
 }

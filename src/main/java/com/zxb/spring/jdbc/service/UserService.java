@@ -16,4 +16,8 @@ public interface UserService {
     List<User> getUsers();
 
     List<User> queryUserByCondition(User user);
+
+    int add(User user);
+
+    List<User> queryUserByAge(int age);
 }
