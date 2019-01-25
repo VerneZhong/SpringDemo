@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 创建表和实体的映射
+ * 创建表和实体的映射，用于查询返回数据对象
  * @author Mr.zxb
  * @date 2019-01-11 17:10
  */

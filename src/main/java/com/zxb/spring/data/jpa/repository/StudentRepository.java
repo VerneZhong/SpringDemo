@@ -3,6 +3,7 @@ package com.zxb.spring.data.jpa.repository;
 import com.zxb.spring.data.jpa.entity.Student;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.data.repository.query.Param;
@@ -137,4 +138,5 @@ public interface StudentRepository { // extends Repository<Student, Integer> {
      */
 //    @Query("insert into Student(name, age) values(?1, ?2)")
     void save(Student student);
+
 }

@@ -29,6 +29,7 @@
 	<bean id="userService" class="com.zxb.spring.jdbc.service.UserServiceImpl">
 		<property name="jdbcTemplate" ref="dataSource"></property>
 		<property name="parameterJdbcTemplate" ref="dataSource"></property>
+		<property name="simpleJdbcInsert" ref="dataSource"/>
 	</bean>
 
 	<!--================-->
@@ -41,7 +42,7 @@
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
 		<!--设置jpa扫描的包-->
-		<property name="packagesToScan" value="com.zxb.spring.data.jpa"/>
+		<property name="packagesToScan" value="com.zxb.spring"/>
 		<!--设置jpa属性-->
 		<property name="jpaProperties">
 			<props>
@@ -68,7 +69,7 @@
 	<tx:annotation-driven />
 
 	<!--配置spring data-->
-	<jpa:repositories base-package="com.zxb.spring.data" entity-manager-factory-ref="entityManagerFactory" />
+	<jpa:repositories base-package="com.zxb.spring" entity-manager-factory-ref="entityManagerFactory" />
 
-	<context:component-scan base-package="com.zxb.spring.data"/>
+	<context:component-scan base-package="com.zxb.spring"/>
 </beans>

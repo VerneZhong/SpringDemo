@@ -20,4 +20,6 @@ public interface UserService {
     int add(User user);
 
     List<User> queryUserByAge(int age);
+
+    long insert(User user);
 }

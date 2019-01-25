@@ -8,7 +8,7 @@
 
 
 1、什么是JDBC?
-  JDBC（Java Data Base Connectivity，Java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问，它是一组用Java语言编写的类和接口组成。
+  JDBC（Java Data Base Connectivity，Java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系型数据库提供统一访问，它是一组用Java语言编写的类和接口组成。
   JDBC为开发人员提供了一个标准的API，据此可以构建更高级的工具和接口，使开发人员能够用纯Java API编写数据库应用程序，并且可跨平台运行，不受数据库供应商的限制。
 
 JDBC连接数据库的流程及原理如下： 

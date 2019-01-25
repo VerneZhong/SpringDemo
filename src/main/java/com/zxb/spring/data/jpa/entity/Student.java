@@ -2,10 +2,7 @@ package com.zxb.spring.data.jpa.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -16,8 +13,8 @@ import java.util.Date;
 @Data
 @Entity
 public class Student {
-    @GeneratedValue
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 20, nullable = false)
     private String name;
