@@ -56,7 +56,7 @@ public class SpringJDBCTest {
     @Test
     public void testSimpleInsert() {
         User user = new User();
-        user.setName("李四1");
+        user.setName("李四2");
         user.setAge(24);
         user.setSex("男");
 

@@ -17,17 +17,13 @@ public class JDBCUtil {
      * @return
      * @throws Exception
      */
-    public static Connection getConnection() throws Exception {
-
+    public static Connection getConnection() throws IOException, ClassNotFoundException, SQLException {
         Properties properties = getProperties();
-
         String url = properties.getProperty("url");
         String user = properties.getProperty("user");
         String pwd = properties.getProperty("pwd");
         String driverClass = properties.getProperty("driverClass");
-
         Class.forName(driverClass);
-
         return DriverManager.getConnection(url, user, pwd);
     }
 

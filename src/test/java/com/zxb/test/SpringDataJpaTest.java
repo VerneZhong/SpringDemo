@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.text.ParseException;
@@ -67,7 +68,7 @@ public class SpringDataJpaTest {
     @Test
     public void test() {
         System.out.println(repository);
-        Student student = repository.findByName("张三");
+        Student student = repository.findByName("张三1");
         System.out.println(student);
     }
 
@@ -119,22 +120,25 @@ public class SpringDataJpaTest {
 //        System.out.println(s);
 
         Student s = new Student();
-        s.setName("张三");
-        s.setAge(28);
+        s.setName("张三2");
+        s.setAge(22);
         s.setCreateDate(new Date());
 
         Student s2 = new Student();
-        s2.setName("李四");
-        s2.setAge(25);
+        s2.setName("李四2");
+        s2.setAge(23);
         s2.setCreateDate(new Date());
 
-        studentService.save(Lists.newArrayList(s, s2));
+//        studentService.save(Lists.newArrayList(s, s2));
+//        studentJpaRepository.save(Lists.newArrayList(s, s2));
+
+        studentService.updateAgeById(1, 32);
     }
 
     @Test
     public void testPage() {
         // page:index是从0开始
-        Pageable pageable = new PageRequest(1, 10);
+        Pageable pageable = new PageRequest(0, 10);
         Page<Student> page = sortingRepository.findAll(pageable);
 
         print(page);
@@ -191,11 +195,6 @@ public class SpringDataJpaTest {
         final List<Long> ids = Lists.newArrayList(1l, 2l, 3l);
         Specification<Student> specification = new Specification<Student>() {
             public Predicate toPredicate(Root<Student> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                CriteriaBuilder.In<Long> in = criteriaBuilder.in(root.<Long> get("id"));
-                for (Long l : ids) {
-                    in.value(l);
-                }
-                criteriaQuery.where(in);
                 Predicate predicate = criteriaBuilder.like(root.<String>get("name"), "%钟%");
                 criteriaQuery.where(predicate);
 //                return criteriaBuilder.gt(root.<Number>get("age"), 25);

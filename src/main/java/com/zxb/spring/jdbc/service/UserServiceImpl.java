@@ -4,7 +4,11 @@ import com.google.common.collect.Maps;
 import com.zxb.spring.jdbc.entity.User;
 import com.zxb.spring.jdbc.mapper.UserRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
@@ -86,11 +90,21 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
+    @Override
     public List<User> queryUserByCondition(User user) {
-        Map<String, Object> map = Maps.newHashMap();
-        map.put("name", user.getName());
-        List<User> list = parameterJdbcTemplate.query("select * from user where name = :name", map, new UserRowMapper());
+        // map参数结构绑定
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("name", user.getName());
+        // 表和实体间的映射
+        RowMapper<User> rowMapper = new UserRowMapper();
+        List<User> list = parameterJdbcTemplate.query("select * from user where name = :name", parameterSource, rowMapper);
         return list;
+    }
+
+    public void addUser(User user) {
+        // 支持对象和参数映射，自动将对象映射为参数结构
+        SqlParameterSource source = new BeanPropertySqlParameterSource(user);
+        parameterJdbcTemplate.update("insert into user(name, age, sex) values (:name, :age, :sex)", source);
     }
 
     /**
@@ -98,6 +112,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
+    @Override
     public int add(User user) {
         Map<String, Object> param = new HashMap<String, Object>(16);
         param.put("name", user.getName());
@@ -109,25 +124,24 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * simpleJdbcInsert 插入用户,并返回主键
+     * simpleJdbcInsert 新增用户,并返回主键
      * @param user
      * @return
      */
+    @Override
     public long insert(User user) {
         // 绑定表和声明主键列
         simpleJdbcInsert.withTableName("user").usingGeneratedKeyColumns("id");
         // 设置参数
         Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("id", user.getId());
         parameters.put("name", user.getName());
         parameters.put("age", user.getAge());
         parameters.put("sex", user.getSex());
-        // 执行插入传入参数
-        simpleJdbcInsert.execute(parameters);
-        // 返回主键
+        // 执行插入传入参数，普通insert，返回影响行数
+//        simpleJdbcInsert.execute(parameters);
+        // 返回主键，有自增id的单条insert
         Number id = simpleJdbcInsert.executeAndReturnKey(parameters);
         return id.intValue();
     }
-
 
 }
