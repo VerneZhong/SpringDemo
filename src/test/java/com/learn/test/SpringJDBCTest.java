@@ -1,8 +1,8 @@
-package com.zxb.test;
+package com.learn.test;
 
-import com.zxb.spring.jdbc.entity.User;
-import com.zxb.spring.jdbc.service.UserService;
-import com.zxb.spring.jdbc.util.JDBCUtil;
+import com.learn.spring.jdbc.entity.User;
+import com.learn.spring.jdbc.service.UserService;
+import com.learn.spring.jdbc.util.JDBCUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

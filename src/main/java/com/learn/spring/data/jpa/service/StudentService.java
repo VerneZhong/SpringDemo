@@ -1,8 +1,8 @@
-package com.zxb.spring.data.jpa.service;
+package com.learn.spring.data.jpa.service;
 
-import com.zxb.spring.data.jpa.entity.Student;
-import com.zxb.spring.data.jpa.repository.StudentCrudRepository;
-import com.zxb.spring.data.jpa.repository.StudentRepository;
+import com.learn.spring.data.jpa.entity.Student;
+import com.learn.spring.data.jpa.repository.StudentCrudRepository;
+import com.learn.spring.data.jpa.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

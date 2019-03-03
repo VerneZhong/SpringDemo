@@ -1,4 +1,4 @@
-package com.zxb.spring.jdbc.util;
+package com.learn.spring.jdbc.util;
 
 import java.io.IOException;
 import java.io.InputStream;

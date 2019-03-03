@@ -1,5 +1,6 @@
-package com.zxb.spring.data.jpa.entity;
+package com.learn.spring.data.jpa.entity;
 
+import com.learn.spring.data.jpa.enums.Gender;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,9 @@ public class Student {
     @Column(length = 20, nullable = false)
     private String name;
     private int age;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 4)
+    private Gender gender;
     private Date createDate;
 
 }

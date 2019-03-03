@@ -1,6 +1,6 @@
-package com.zxb.spring.jdbc.mapper;
+package com.learn.spring.jdbc.mapper;
 
-import com.zxb.spring.jdbc.entity.User;
+import com.learn.spring.jdbc.entity.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package com.zxb.spring.jdbc.entity;
+package com.learn.spring.jdbc.entity;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.zxb.spring.jdbc.service;
+package com.learn.spring.jdbc.service;
 
-import com.zxb.spring.jdbc.entity.User;
+import com.learn.spring.jdbc.entity.User;
 
 import java.util.List;
 

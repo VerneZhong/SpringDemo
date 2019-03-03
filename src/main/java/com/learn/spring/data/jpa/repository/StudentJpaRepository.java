@@ -1,6 +1,6 @@
-package com.zxb.spring.data.jpa.repository;
+package com.learn.spring.data.jpa.repository;
 
-import com.zxb.spring.data.jpa.entity.Student;
+import com.learn.spring.data.jpa.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
