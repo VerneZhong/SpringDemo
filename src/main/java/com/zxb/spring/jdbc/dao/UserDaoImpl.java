@@ -1,8 +1,8 @@
 package com.zxb.spring.jdbc.dao;
 
 import com.google.common.collect.Lists;
-import com.zxb.spring.jdbc.entity.User;
-import com.zxb.spring.jdbc.util.JDBCUtil;
+import com.learn.spring.jdbc.entity.User;
+import com.learn.spring.jdbc.util.JDBCUtil;
 
 import java.sql.*;
 import java.util.List;

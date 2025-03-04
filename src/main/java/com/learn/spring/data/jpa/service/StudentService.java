@@ -39,7 +39,7 @@ public class StudentService {
 
     @Transactional(rollbackFor = Exception.class)
     public void save(List<Student> students) {
-        studentCrudRepository.save(students);
+        studentCrudRepository.saveAll(students);
     }
 
 }

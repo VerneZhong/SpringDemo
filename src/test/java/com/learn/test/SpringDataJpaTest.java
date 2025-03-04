@@ -1,22 +1,21 @@
-package com.zxb.test;
+package com.learn.test;
 
 import com.google.common.collect.Lists;
-import com.zxb.spring.data.jpa.entity.Student;
-import com.zxb.spring.data.jpa.repository.*;
-import com.zxb.spring.data.jpa.service.StudentService;
-import com.zxb.spring.jdbc.entity.User;
+import com.learn.spring.data.jpa.entity.Student;
+import com.learn.spring.data.jpa.repository.*;
+import com.learn.spring.data.jpa.service.StudentService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -134,7 +133,7 @@ public class SpringDataJpaTest {
     @Test
     public void testPage() {
         // page:index是从0开始
-        Pageable pageable = new PageRequest(1, 10);
+        Pageable pageable = PageRequest.of(1, 10);
         Page<Student> page = sortingRepository.findAll(pageable);
 
         print(page);
@@ -144,9 +143,9 @@ public class SpringDataJpaTest {
     public void testSort() {
         // 排序
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "createDate");
-        Sort sort = new Sort(order);
+        Sort sort = Sort.by(order);
         // page:index是从0开始
-        Pageable pageable = new PageRequest(0, 5, sort);
+        Pageable pageable = PageRequest.of(0, 5, sort);
         Page<Student> page = sortingRepository.findAll(pageable);
 
         print(page);
@@ -160,8 +159,12 @@ public class SpringDataJpaTest {
 //        List<Student> students = studentJpaRepository.findAll();
 //        System.out.println(students);
 
-        boolean b1 = studentJpaRepository.exists(1);
-        boolean b2 = studentJpaRepository.exists(100);
+        Student student = new Student();
+        student.setId(1);
+        Example<Student> example = Example.of(student);
+        boolean b1 = studentJpaRepository.exists(example);
+        student.setId(100);
+        boolean b2 = studentJpaRepository.exists(example);
         System.out.println(b1 + "--" + b2);
     }
 
@@ -172,9 +175,9 @@ public class SpringDataJpaTest {
         // 查询条件 age < 25
         // 排序
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "createDate");
-        Sort sort = new Sort(order);
+        Sort sort = Sort.by(order);
         // page:index是从0开始
-        Pageable pageable = new PageRequest(0, 5, sort);
+        Pageable pageable = PageRequest.of(0, 5, sort);
 
         /**
          * 查询条件
