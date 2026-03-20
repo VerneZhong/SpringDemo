@@ -21,7 +21,7 @@
     </build>
 
     <properties>
-        <spring.version>6.2.0</spring.version>
+        <spring.version>6.2.17</spring.version>
     </properties>
 
     <dependencies>
